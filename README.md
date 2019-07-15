@@ -1,7 +1,7 @@
 # octad4j
 Octad4j is the standard library for the Octad chess variant written in Java.
 
-Octad is a creation of Andrew DeChristopher. Rules and information about the game can be found below. Octad is thought to be a deterministic game
+Octad is a creation of Andrew DeChristopher. Rules and information about the game can be found below. Octad is thought to be a deterministic game but needs formal verification to prove that.
 
 ## Octad Game
 ### Board Layout
