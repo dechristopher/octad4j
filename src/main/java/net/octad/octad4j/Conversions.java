@@ -7,13 +7,15 @@ import java.util.Arrays;
  */
 class Conversions {
 
+    private static final String ofenChars = "pPnNbBrRqQkK1234/";
+
     /**
      * Get the raw position string for generation of the actual OFEN and for printing
      *
      * @return String: raw position
      */
-    static char[] getRawPositionString(char[] whiteBoards, char[] blackBoards) {
-        StringBuilder position = new StringBuilder("");
+    static char[] bitboardsToRaw(char[] whiteBoards, char[] blackBoards) {
+        StringBuilder position = new StringBuilder();
 
         for (short i = 16; i > 0; i -= 4) {
             for (short j = 4; j > 0; j--) {
@@ -40,11 +42,11 @@ class Conversions {
 
     /**
      * Convert raw position string to an OFEN formatted position
-     *
+     * <p>
      * generate OFEN position string
      * from: ppkn........NKPP
      * to: ppkn/4/4/NKPP
-     *
+     * <p>
      * after 1. c2
      * from: ppkn......P.NK.P
      * to: ppkn/4/2P1/NK1P
@@ -53,10 +55,10 @@ class Conversions {
      * @return String: OFEN formatted position
      */
     static String genOFENLayout(Octad game) {
-        char[] rawPosition = getRawPositionString(
-                game.WHITE.getPositionBitboards(), game.BLACK.getPositionBitboards()
+        char[] rawPosition = bitboardsToRaw(
+                game.getWhite().getPositionBitboards(), game.getBlack().getPositionBitboards()
         );
-        StringBuilder position = new StringBuilder("");
+        StringBuilder position = new StringBuilder();
 
         int chunk = 4; // chunk size to divide
         for (int i = 0; i < rawPosition.length; i += chunk) {
@@ -75,7 +77,7 @@ class Conversions {
                 }
             }
 
-            if(emptyCount != 0) {
+            if (emptyCount != 0) {
                 position.append(emptyCount);
             }
 
@@ -87,18 +89,50 @@ class Conversions {
         return position.toString();
     }
 
-    static String rawFromOFEN(String ofen) {
-        //TODO - convert ofen string to raw position string
-        return "";
+    /**
+     * Convert an ofen board representation to a raw position string
+     *
+     * @param ofen - ofen board string
+     * @return String: raw position string
+     * @throws IllegalArgumentException if invalid OFEN character
+     */
+    static String rawFromOFEN(String ofen) throws IllegalArgumentException {
+        StringBuilder raw = new StringBuilder();
+        for (char token : ofen.toCharArray()) {
+            if (!ofenChars.contains(String.valueOf(token))) {
+                throw new IllegalArgumentException("Invalid OFEN character: `" + token + "`");
+            }
+            if (token != '/') {
+                try {
+                    int count = Integer.parseInt(String.valueOf(token));
+                    raw.append(".".repeat(count));
+                } catch (NumberFormatException nfe) {
+                    raw.append(token);
+                }
+            }
+        }
+
+        return raw.toString();
     }
 
+    /**
+     * Converts a raw position string to an array of position bitboards for each team
+     * <p>
+     * index 0-2: white piece positions (K, N, P)
+     * index 305: black piece positions (k, n, p)
+     *
+     * @param rawPosition - raw position string
+     * @return char[]: piece position bitboards
+     */
     static char[] rawToBitboards(String rawPosition) {
-        //TODO - convert raw position string to bitboards
+
+
         return null;
     }
 
     /**
      * Generates bitboards directly from an OFEN board representation
+     *
      * @param ofenBoard - OFEN board string
      * @return char[] generated position bitboards
      */

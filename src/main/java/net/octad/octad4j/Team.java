@@ -1,7 +1,7 @@
 package net.octad.octad4j;
 
 import static net.octad.octad4j.BitBoard.*;
-import static net.octad.octad4j.Color.*;
+import static net.octad.octad4j.Color.WHITE;
 
 /**
  * Class defining one team, its color, and its pieces
@@ -17,6 +17,7 @@ public class Team {
 
     /**
      * Return the color of this team
+     *
      * @return Color: this team's color
      */
     public Color getColor() {
@@ -25,6 +26,7 @@ public class Team {
 
     /**
      * Return all 9 bitboards representing the position of this team
+     *
      * @return char[]: bitboards
      */
     public char[] getBitboards() {
@@ -33,6 +35,7 @@ public class Team {
 
     /**
      * Set
+     *
      * @param boards =
      */
     public void setBitboards(char[] boards) {
@@ -41,10 +44,11 @@ public class Team {
 
     /**
      * Return the three bitboards representing this team's piece positions
+     *
      * @return char[]: piece position boards
      */
     public char[] getPositionBitboards() {
-        return new char[] {this.bitboards[0], this.bitboards[3], this.bitboards[6]};
+        return new char[]{this.bitboards[0], this.bitboards[3], this.bitboards[6]};
     }
 
     /**
@@ -58,22 +62,25 @@ public class Team {
 
     /**
      * Return the three bitboards representing this team's piece attack squares
+     *
      * @return char[]: piece attack boards
      */
     public char[] getAttackBitboards() {
-        return new char[] {this.bitboards[1], this.bitboards[4], this.bitboards[7]};
+        return new char[]{this.bitboards[1], this.bitboards[4], this.bitboards[7]};
     }
 
     /**
      * Return the three bitboards representing this team's piece move squares
+     *
      * @return char[]: piece move boards
      */
     public char[] getMoveBitboards() {
-        return new char[] {this.bitboards[2], this.bitboards[5], this.bitboards[8]};
+        return new char[]{this.bitboards[2], this.bitboards[5], this.bitboards[8]};
     }
 
     /**
      * Get the team's corresponding bitboard
+     *
      * @param board - board type
      * @return char: bitboard
      */
@@ -83,6 +90,7 @@ public class Team {
 
     /**
      * Returns the position of the king as a bitboard
+     *
      * @return char: king position bitboard
      */
     public char getKingPositionBitBoard() {
@@ -91,6 +99,7 @@ public class Team {
 
     /**
      * Returns the king attack squares bitboard
+     *
      * @return char: king attack bitboard
      */
     public char getKingAttackBitBoard() {
@@ -99,6 +108,7 @@ public class Team {
 
     /**
      * Returns the king move squares bitboard
+     *
      * @return char: king move bitboard
      */
     public char getKingMoveBitBoard() {

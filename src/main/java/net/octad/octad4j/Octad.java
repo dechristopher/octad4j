@@ -9,25 +9,9 @@ import static net.octad.octad4j.BitBoard.*;
  */
 public class Octad {
 
-    private static final String[] SQUARES = {
-            "a1", "b1", "c1", "d1",
-            "a2", "b2", "c2", "d2",
-            "a3", "b3", "c3", "d3",
-            "a4", "b4", "c4", "d4"
-    };
+    public static final String startingOFEN = "ppkn/4/4/NKPP";
 
-    // numeric values of each square on the board from a1 - d4
-    private static final char[] SQUAREVALS = {
-            1, 2, 4, 8,
-            16, 32, 64, 128,
-            256, 512, 1024, 2048,
-            4096, 8192, 16384, 32768
-    };
-
-    private static final String ofenChars = ".pPnNbBrRqQkK12345678";
-    private String startingOFEN = "ppkn/4/4/NKPP";
-
-    public Team WHITE, BLACK;
+    private Team WHITE, BLACK;
 
     private char activeColor = 'w';
     private String castling = "NCFncf";
@@ -44,6 +28,7 @@ public class Octad {
     }
 
     public Octad(String ofen) {
+        this();
         String[] ofenParts = ofen.split(" ");
         this.activeColor = ofenParts[1].charAt(0);
         this.castling = ofenParts[2];
@@ -55,6 +40,24 @@ public class Octad {
         BLACK.setBitboards(Arrays.copyOfRange(boards, 3, 5));
         //TODO - regenerate movement and attack bitboards
         //TODO - verify legal board state
+    }
+
+    /**
+     * Returns the white team
+     *
+     * @return Team: white
+     */
+    public Team getWhite() {
+        return this.WHITE;
+    }
+
+    /**
+     * Returns the black team
+     *
+     * @return Team: black
+     */
+    public Team getBlack() {
+        return this.BLACK;
     }
 
     /**
@@ -166,22 +169,6 @@ public class Octad {
     }
 
     /**
-     * Returns the white team
-     * @return Team: white
-     */
-    public Team getWhite() {
-        return this.WHITE;
-    }
-
-    /**
-     * Returns the black team
-     * @return Team: black
-     */
-    public Team getBlack() {
-        return this.BLACK;
-    }
-
-    /**
      * Checks to see if a color is currently in check
      *
      * @param color - color to check
@@ -243,7 +230,7 @@ public class Octad {
          */
         for (short i = 0; i < 16; i++) {
             if (((kingPosition >> i) & 1) == 1) {
-                return SQUARES[i];
+                return BitBoard.SQUARES[i];
             }
         }
         // impossible unless a game is imported from an OFEN without a king
@@ -307,7 +294,7 @@ public class Octad {
      */
     public void printPosition() {
         int div = 1;
-        for (char c : Conversions.getRawPositionString(WHITE.getPositionBitboards(), BLACK.getPositionBitboards())) {
+        for (char c : Conversions.bitboardsToRaw(WHITE.getPositionBitboards(), BLACK.getPositionBitboards())) {
             System.out.print(c + " ");
             if (div % 4 == 0) {
                 System.out.println();
@@ -324,5 +311,10 @@ public class Octad {
         o.printPosition();
 
         System.out.println("\n" + Conversions.genOFENLayout(o));
+
+        String ofen = "ppk1/1n2/2P1/NK1P";
+
+        System.out.println("\n" + Conversions.rawFromOFEN(ofen));
+        System.out.println();
     }
 }
