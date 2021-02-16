@@ -12,7 +12,7 @@ An OFEN record contains six fields. The separator between fields is a space. The
 
 2. Active color. "w" means White moves next, "b" means Black moves next.
 
-3. Castling availability. If neither color can castle, this is "-". Otherwise, this has one or more letters: "N" (White can castle nightside), "C" (White can castle with close pawn), "F" (White can castle with far pawn),  "n" (Black can castle knightside), "c" (Black can castle with close pawn), and/or "f" (Black can castle with far pawn).
+3. Castling availability. If neither color can castle, this is "-". Otherwise, this has one or more letters: "N" (White can castle knightside), "C" (White can castle with close pawn), "F" (White can castle with far pawn),  "n" (Black can castle knightside), "c" (Black can castle with close pawn), and/or "f" (Black can castle with far pawn).
 
 4. En passant target square in algebraic notation. If there's no en passant target square, this is "-". If a pawn has just made a two-square move, this is the position "behind" the pawn. This is recorded regardless of whether there is a pawn in position to make an en passant capture.
 
